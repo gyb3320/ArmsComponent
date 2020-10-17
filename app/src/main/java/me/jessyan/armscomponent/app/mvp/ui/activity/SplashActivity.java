@@ -19,7 +19,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.facade.callback.NavigationCallback;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 
@@ -30,7 +33,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import me.jessyan.armscomponent.app.R;
 import me.jessyan.armscomponent.commonsdk.core.RouterHub;
-import me.jessyan.armscomponent.commonsdk.utils.Utils;
+import timber.log.Timber;
 
 /**
  * ================================================
@@ -58,9 +61,36 @@ public class SplashActivity extends BaseActivity {
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
-                        Utils.navigation(SplashActivity.this, RouterHub.APP_MAINACTIVITY);
-                        finish();
-                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        //这里需要注意，因为从当前模块的某个页面跳转到不同模块的某个页面，并关闭当前模块的页面时，
+                        // 需要在NavigationCallback的监听事件里，添加关闭逻辑，否则会容易造成先关闭当前页面，后执行跳转，造成程序闪退
+                        ARouter.getInstance().build(RouterHub.APP_MAINACTIVITY).navigation(SplashActivity.this, new NavigationCallback() {
+                            @Override
+                            public void onFound(Postcard postcard) {
+                                //路由目标被发现时调用
+                                Timber.tag("gyb").d("onFound - postcard.toString():" + postcard.toString());
+                            }
+
+                            @Override
+                            public void onLost(Postcard postcard) {
+                                //路由目标被丢失时调用
+                                Timber.tag("gyb").d("onLost - postcard.toString():" + postcard.toString());
+                                finish();
+                            }
+
+                            @Override
+                            public void onArrival(Postcard postcard) {
+                                //路由到达目标后调用
+                                Timber.tag("gyb").d("onArrival - postcard.toString():" + postcard.toString());
+                                finish();
+                            }
+
+                            @Override
+                            public void onInterrupt(Postcard postcard) {
+                                //路由目标被拦截时调用
+                                Timber.tag("gyb").d("onInterrupt - postcard.toString():" + postcard.toString());
+                                finish();
+                            }
+                        });
                     }
                 });
     }
