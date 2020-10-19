@@ -36,7 +36,9 @@ import me.jessyan.armscomponent.commonsdk.core.RouterHub;
 import me.jessyan.armscomponent.zhihu.R;
 import me.jessyan.armscomponent.zhihu.R2;
 import me.jessyan.armscomponent.zhihu.di.component.DaggerZhihuHomeComponent;
+import me.jessyan.armscomponent.zhihu.mvp.contract.ZhihuCommonContract;
 import me.jessyan.armscomponent.zhihu.mvp.contract.ZhihuHomeContract;
+import me.jessyan.armscomponent.zhihu.mvp.presenter.ZhihuCommonPresenter;
 import me.jessyan.armscomponent.zhihu.mvp.presenter.ZhihuHomePresenter;
 import timber.log.Timber;
 
@@ -52,7 +54,7 @@ import timber.log.Timber;
  * ================================================
  */
 @Route(path = RouterHub.ZHIHU_HOMEACTIVITY)
-public class ZhihuHomeActivity extends BaseActivity<ZhihuHomePresenter> implements ZhihuHomeContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class ZhihuHomeActivity extends BaseActivity<ZhihuHomePresenter> implements ZhihuHomeContract.View, ZhihuCommonContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -63,6 +65,9 @@ public class ZhihuHomeActivity extends BaseActivity<ZhihuHomePresenter> implemen
     @Inject
     RecyclerView.Adapter mAdapter;
 
+    @Inject
+    ZhihuCommonPresenter zhihuCommonPresenter;
+
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -70,6 +75,7 @@ public class ZhihuHomeActivity extends BaseActivity<ZhihuHomePresenter> implemen
                 .builder()
                 .appComponent(appComponent)
                 .view(this)
+                .view2(this)//别忘了注入UserContract.View
                 .build()
                 .inject(this);
     }
@@ -83,6 +89,8 @@ public class ZhihuHomeActivity extends BaseActivity<ZhihuHomePresenter> implemen
     public void initData(@Nullable Bundle savedInstanceState) {
         initRecyclerView();
         mRecyclerView.setAdapter(mAdapter);
+
+        zhihuCommonPresenter.getDetail(101);
     }
 
 

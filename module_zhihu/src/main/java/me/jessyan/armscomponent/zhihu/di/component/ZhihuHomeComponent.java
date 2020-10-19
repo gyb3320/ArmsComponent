@@ -20,7 +20,9 @@ import com.jess.arms.di.scope.ActivityScope;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import me.jessyan.armscomponent.zhihu.di.module.ZhihuCommonModule;
 import me.jessyan.armscomponent.zhihu.di.module.ZhihuHomeModule;
+import me.jessyan.armscomponent.zhihu.mvp.contract.ZhihuCommonContract;
 import me.jessyan.armscomponent.zhihu.mvp.contract.ZhihuHomeContract;
 import me.jessyan.armscomponent.zhihu.mvp.ui.activity.ZhihuHomeActivity;
 
@@ -35,13 +37,16 @@ import me.jessyan.armscomponent.zhihu.mvp.ui.activity.ZhihuHomeActivity;
  * ================================================
  */
 @ActivityScope
-@Component(modules = ZhihuHomeModule.class, dependencies = AppComponent.class)
+@Component(modules = {ZhihuHomeModule.class, ZhihuCommonModule.class}, dependencies = AppComponent.class)
 public interface ZhihuHomeComponent {
     void inject(ZhihuHomeActivity activity);
     @Component.Builder
     interface Builder {
         @BindsInstance
         ZhihuHomeComponent.Builder view(ZhihuHomeContract.View view);
+        @BindsInstance
+        ZhihuHomeComponent.Builder view2(ZhihuCommonContract.View view);
+
         ZhihuHomeComponent.Builder appComponent(AppComponent appComponent);
         ZhihuHomeComponent build();
     }
