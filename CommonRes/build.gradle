@@ -32,4 +32,8 @@ dependencies {
     }
     api rootProject.ext.dependencies["paginate"]
     api rootProject.ext.dependencies["lottie"]
+
+    //-------------------------以上是通过Arms模块模板创建项目时自带的，以下是因业务需求新增的----------------------------
+    api rootProject.ext.dependencies["BaseRecyclerViewAdapterHelper"]
+    api rootProject.ext.dependencies["FlycoTabLayout_Lib"]
 }

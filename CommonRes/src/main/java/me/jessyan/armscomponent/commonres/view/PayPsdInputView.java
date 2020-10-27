@@ -18,7 +18,7 @@ import static android.graphics.Paint.ANTI_ALIAS_FLAG;
  * 自定义支付密码输入框
  */
 
-public class PayPsdInputView extends android.support.v7.widget.AppCompatEditText {
+public class PayPsdInputView extends androidx.appcompat.widget.AppCompatEditText {
 
     private Context mContext;
     /**

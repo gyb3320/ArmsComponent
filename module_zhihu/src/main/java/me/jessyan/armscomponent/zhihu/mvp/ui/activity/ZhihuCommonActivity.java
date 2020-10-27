@@ -2,8 +2,8 @@ package me.jessyan.armscomponent.zhihu.mvp.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
@@ -43,7 +43,7 @@ public class ZhihuCommonActivity extends BaseActivity<ZhihuCommonPresenter> impl
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_zhihu_common; //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
+        return R.layout.zhihu_activity_zhihu_common; //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
     }
 
     @Override

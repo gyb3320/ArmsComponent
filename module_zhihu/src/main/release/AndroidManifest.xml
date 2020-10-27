@@ -3,8 +3,10 @@
     package="me.jessyan.armscomponent.zhihu">
 
     <application>
-        <activity android:name=".mvp.ui.activity.ZhihuCommonActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".mvp.ui.activity.ZhihuTabActivity"></activity>
+        <activity
+            android:name=".mvp.ui.activity.ZhihuCommonActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.ui.activity.ZhihuHomeActivity"
             android:configChanges="orientation|screenSize"

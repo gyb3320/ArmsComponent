@@ -15,9 +15,11 @@
  */
 package me.jessyan.armscomponent.zhihu.di.module;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.content.Intent;
 import android.view.View;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jess.arms.base.DefaultAdapter;
@@ -34,6 +36,7 @@ import me.jessyan.armscomponent.zhihu.app.ZhihuConstants;
 import me.jessyan.armscomponent.zhihu.mvp.contract.ZhihuHomeContract;
 import me.jessyan.armscomponent.zhihu.mvp.model.ZhihuModel;
 import me.jessyan.armscomponent.zhihu.mvp.model.entity.DailyListBean;
+import me.jessyan.armscomponent.zhihu.mvp.ui.activity.ZhihuTabActivity;
 import me.jessyan.armscomponent.zhihu.mvp.ui.adapter.ZhihuHomeAdapter;
 
 /**
@@ -70,6 +73,10 @@ public abstract class ZhihuHomeModule {
         adapter.setOnItemClickListener(new DefaultAdapter.OnRecyclerViewItemClickListener<DailyListBean.StoriesBean>() {
             @Override
             public void onItemClick(View view, int viewType, DailyListBean.StoriesBean data, int position) {
+                if (position==0){
+                    zhihuHomeView.getActivity().startActivity(new Intent(zhihuHomeView.getActivity(), ZhihuTabActivity.class));
+                    return;
+                }
                 ARouter.getInstance()
                         .build(RouterHub.ZHIHU_DETAILACTIVITY)
                         .withInt(ZhihuConstants.DETAIL_ID, data.getId())
